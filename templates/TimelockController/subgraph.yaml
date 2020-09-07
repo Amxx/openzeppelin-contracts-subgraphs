@@ -1,0 +1,45 @@
+specVersion: 0.0.2
+description: TimelockController
+repository: https://github.com/OpenZeppelin/openzeppelin-contracts
+schema:
+  file: ./schema.graphql
+dataSources:
+  - name: TimelockController
+    kind: ethereum/contract
+    network: goerli
+    source:
+      address: '0x52c510B2f854A6b500D64F47076E14890310dd6E'
+      abi: TimelockController
+      startBlock: 3360000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Address
+        - Transaction
+        - Operation
+        - Call
+        - Executed
+        - Scheduled
+        - Canceled
+        - MinDelayChange
+      abis:
+        - name: TimelockController
+          file: ./abi/build/contracts/TimelockController.json
+      eventHandlers:
+        - event: CallScheduled(indexed bytes32,indexed uint256,address,uint256,bytes,bytes32)
+          handler: handleCallScheduled
+        - event: CallExecuted(indexed bytes32,indexed uint256,address,uint256,bytes)
+          handler: handleCallExecuted
+        - event: Canceled(indexed bytes32)
+          handler: handleCanceled
+        - event: MinDelayChange(uint256,uint256)
+          handler: handleMinDelayChange
+        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleRoleAdminChanged
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+      file: ./src/TimelockController.ts

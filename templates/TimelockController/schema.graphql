@@ -1,0 +1,143 @@
+interface Event
+{
+	id:                           ID!
+	transaction:                  Transaction!
+	timestamp:                    BigInt!
+}
+
+type Transaction @entity {
+	id:                           ID!
+	timestamp:                    BigInt!
+	blockNumber:                  BigInt!
+	events:                       [Event!]! @derivedFrom(field: "transaction")
+}
+
+type Target @entity {
+	id:                           ID!
+	calls:                        [Call!]! @derivedFrom(field: "target")
+}
+
+# ================================ Operations =================================
+enum OperationStatus {
+	SCHEDULED
+	EXECUTED
+	CANCELED
+}
+
+type Operation @entity
+{
+	id:                           ID!
+	status:                       OperationStatus!
+	timestamp:                    BigInt!
+	predecessor:                  Operation
+	calls:                        [Call!]! @derivedFrom(field: "operation")
+	events:                       [OperationEvent!]! @derivedFrom(field: "operation")
+}
+
+type Call @entity
+{
+	id:                           ID!
+	operation:                    Operation!
+	index:                        BigInt!
+	target:                       Target!
+	value:                        BigDecimal!
+	data:                         Bytes!
+	scheduled:                    [Scheduled!]! @derivedFrom(field: "call")
+	executed:                     [Executed!]! @derivedFrom(field: "call")
+}
+
+interface OperationEvent
+{
+	id:                           ID!
+	transaction:                  Transaction!
+	timestamp:                    BigInt!
+	operation:                    Operation!
+}
+
+type Scheduled implements OperationEvent @entity
+{
+	id:                           ID!
+	transaction:                  Transaction!
+	timestamp:                    BigInt!
+	operation:                    Operation!
+	call:                         Call!
+}
+
+type Executed implements OperationEvent @entity
+{
+	id:                           ID!
+	transaction:                  Transaction!
+	timestamp:                    BigInt!
+	operation:                    Operation!
+	call:                         Call!
+}
+
+type Canceled implements OperationEvent @entity
+{
+	id:                           ID!
+	transaction:                  Transaction!
+	timestamp:                    BigInt!
+	operation:                    Operation!
+}
+
+type MinDelayChange implements Event @entity
+{
+	id:                           ID!
+	transaction:                  Transaction!
+	timestamp:                    BigInt!
+}
+
+# =============================== AccessControl ===============================
+
+type Account @entity {
+	id:                           ID!
+	isAdmin:                      Boolean
+	isProposer:                   Boolean
+	isExecuter:                   Boolean
+	roles:                        [AccessControlPair!]! @derivedFrom(field: "account")
+	events:                       [AccessControlEvent!]! @derivedFrom(field: "account")
+}
+
+type Role @entity {
+	id:                           ID!
+	admin:                        Role
+	members:                      [AccessControlPair!]! @derivedFrom(field: "role")
+	events:                       [AccessControlEvent!]! @derivedFrom(field: "role")
+}
+
+type AccessControlPair @entity {
+	id:                           ID!
+	account:                      Account!
+	role:                         Role!
+}
+
+interface AccessControlEvent
+{
+	id:                           ID!
+	transaction:                  Transaction!
+	timestamp:                    BigInt!
+	account:                      Account!
+	role:                         Role!
+}
+
+type RoleGranted implements AccessControlEvent @entity
+{
+	id:                           ID!
+	transaction:                  Transaction!
+	timestamp:                    BigInt!
+	account:                      Account!
+	role:                         Role!
+	sender:                       Account!
+}
+
+type RoleRevoked implements AccessControlEvent @entity
+{
+	id:                           ID!
+	transaction:                  Transaction!
+	timestamp:                    BigInt!
+	account:                      Account!
+	role:                         Role!
+	sender:                       Account!
+}
+
+# RoleAdminChanged
