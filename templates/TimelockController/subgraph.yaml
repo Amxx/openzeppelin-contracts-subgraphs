@@ -26,7 +26,7 @@ dataSources:
         - MinDelayChange
       abis:
         - name: TimelockController
-          file: ./abi/build/contracts/TimelockController.json
+          file: ./abi/TimelockController.json
       eventHandlers:
         - event: CallScheduled(indexed bytes32,indexed uint256,address,uint256,bytes,bytes32)
           handler: handleCallScheduled
