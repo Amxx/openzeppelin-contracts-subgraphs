@@ -22,7 +22,7 @@ dataSources:
         - Call
         - Executed
         - Scheduled
-        - Canceled
+        - Cancelled
         - MinDelayChange
       abis:
         - name: TimelockController
@@ -32,8 +32,8 @@ dataSources:
           handler: handleCallScheduled
         - event: CallExecuted(indexed bytes32,indexed uint256,address,uint256,bytes)
           handler: handleCallExecuted
-        - event: Canceled(indexed bytes32)
-          handler: handleCanceled
+        - event: Cancelled(indexed bytes32)
+          handler: handleCancelled
         - event: MinDelayChange(uint256,uint256)
           handler: handleMinDelayChange
         - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)

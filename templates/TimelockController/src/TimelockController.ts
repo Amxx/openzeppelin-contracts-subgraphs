@@ -2,7 +2,7 @@ import {
 	TimelockController as TimelockControllerContract,
 	CallExecuted as CallExecutedEvent,
 	CallScheduled as CallScheduledEvent,
-	Canceled as CanceledEvent,
+	Cancelled as CancelledEvent,
 	MinDelayChange as MinDelayChangeEvent,
 	RoleAdminChanged as RoleAdminChangedEvent,
 	RoleGranted as RoleGrantedEvent,
@@ -16,7 +16,7 @@ import {
 	Call,
 	Executed,
 	Scheduled,
-	Canceled,
+	Cancelled,
 	MinDelayChange,
 	Account,
 	Role,
@@ -76,12 +76,12 @@ export function handleCallExecuted(event: CallExecutedEvent): void {
 	ev.save()
 }
 
-export function handleCanceled(event: CanceledEvent): void {
+export function handleCancelled(event: CancelledEvent): void {
 	let operation         = new Operation(event.params.id.toHex())
 	operation.status      = "CANCELED"
 	operation.save()
 
-	let ev                = new Canceled(createEventID(event))
+	let ev                = new Cancelled(createEventID(event))
 	ev.transaction        = logTransaction(event).id
 	ev.timestamp          = event.block.timestamp
 	ev.operation          = operation.id

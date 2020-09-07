@@ -72,7 +72,7 @@ type Executed implements OperationEvent @entity
 	call:                         Call!
 }
 
-type Canceled implements OperationEvent @entity
+type Cancelled implements OperationEvent @entity
 {
 	id:                           ID!
 	transaction:                  Transaction!
