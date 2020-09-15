@@ -8,9 +8,9 @@ dataSources:
     kind: ethereum/contract
     network: goerli
     source:
-      address: '0x52c510B2f854A6b500D64F47076E14890310dd6E'
+      address: '0xFDBE8CE5812dd03CBB89249c2EA14121a8c5D642'
       abi: TimelockController
-      startBlock: 3360000
+      startBlock: 3400000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -28,7 +28,7 @@ dataSources:
         - name: TimelockController
           file: ./abi/TimelockController.json
       eventHandlers:
-        - event: CallScheduled(indexed bytes32,indexed uint256,address,uint256,bytes,bytes32)
+        - event: CallScheduled(indexed bytes32,indexed uint256,address,uint256,bytes,bytes32,uint256)
           handler: handleCallScheduled
         - event: CallExecuted(indexed bytes32,indexed uint256,address,uint256,bytes)
           handler: handleCallExecuted

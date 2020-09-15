@@ -37,7 +37,7 @@ export function handleCallScheduled(event: CallScheduledEvent): void
 {
 	let operation         = new Operation(event.params.id.toHex())
 	operation.status      = "SCHEDULED"
-	operation.timestamp   = TimelockControllerContract.bind(event.address).viewTimestamp(event.params.id)
+	operation.timestamp   = event.block.timestamp + event.params.delay
 	operation.predecessor = event.params.predecessor ? event.params.predecessor.toHex() : null
 	operation.save()
 
