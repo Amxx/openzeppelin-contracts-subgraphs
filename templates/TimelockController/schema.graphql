@@ -93,7 +93,7 @@ type Account @entity {
 	id:                           ID!
 	isAdmin:                      Boolean
 	isProposer:                   Boolean
-	isExecuter:                   Boolean
+	isExecutor:                   Boolean
 	roles:                        [AccessControlPair!]! @derivedFrom(field: "account")
 	events:                       [AccessControlEvent!]! @derivedFrom(field: "account")
 }

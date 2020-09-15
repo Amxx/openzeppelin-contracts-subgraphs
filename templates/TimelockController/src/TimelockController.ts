@@ -101,7 +101,7 @@ export function handleRoleGranted(event: RoleGrantedEvent): void {
 	let account           = new Account(event.params.account.toHex())
 	if (role.id == "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775") account.isAdmin    = true
 	if (role.id == "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1") account.isProposer = true
-	if (role.id == "0xf6d4b94561d34a2e202535a880be5a411bcfa4d7aeb44117cc8d682e63ec4759") account.isExecuter = true
+	if (role.id == "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63") account.isExecutor = true
 	account.save()
 
 	let sender            = new Account(event.params.sender.toHex())
@@ -128,7 +128,7 @@ export function handleRoleRevoked(event: RoleRevokedEvent): void {
 	let account           = new Account(event.params.account.toHex())
 	if (role.id == "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775") account.isAdmin    = false
 	if (role.id == "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1") account.isProposer = false
-	if (role.id == "0xf6d4b94561d34a2e202535a880be5a411bcfa4d7aeb44117cc8d682e63ec4759") account.isExecuter = false
+	if (role.id == "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63") account.isExecutor = false
 	account.save()
 
 	let sender            = new Account(event.params.sender.toHex())
