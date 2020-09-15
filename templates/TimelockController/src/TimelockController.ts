@@ -37,6 +37,7 @@ export function handleCallScheduled(event: CallScheduledEvent): void
 {
 	let operation         = new Operation(event.params.id.toHex())
 	operation.status      = "SCHEDULED"
+	operation.delay       = event.params.delay
 	operation.timestamp   = event.block.timestamp + event.params.delay
 	operation.predecessor = event.params.predecessor ? event.params.predecessor.toHex() : null
 	operation.save()

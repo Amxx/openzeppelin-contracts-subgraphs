@@ -28,6 +28,7 @@ type Operation @entity
 {
 	id:                           ID!
 	status:                       OperationStatus!
+	delay:                        BigInt!
 	timestamp:                    BigInt!
 	predecessor:                  Operation
 	calls:                        [Call!]! @derivedFrom(field: "operation")
